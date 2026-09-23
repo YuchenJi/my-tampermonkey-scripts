@@ -5,6 +5,8 @@
 // @description  合并抗异步联动错峰填写、本地 Excel 数据导入及明细表多行联动功能
 // @author       YourName
 // @match        *://oa.ween-semi.com/spa/workflow/static4form/*
+// @updateURL    https://cdn.jsdelivr.net/gh/YuchenJi/my-tampermonkey-scripts@main/autofill_oa_system.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/YuchenJi/my-tampermonkey-scripts@main/autofill_oa_system.user.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js
 // @grant        none
 // ==/UserScript==
