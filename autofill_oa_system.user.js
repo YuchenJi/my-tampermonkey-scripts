@@ -144,7 +144,7 @@
             // ==========================================
             // 表单 B : ATR
             // ==========================================
-            else if (currentUrl.includes("workflowid=562")) {
+            else if (currentUrl.includes("workflowid=629")) {
                 console.log("识别为: 第二个表单 ATR，执行方案 B");
 
                 window.WfForm.changeFieldValue("field8316", { value: "1" });
