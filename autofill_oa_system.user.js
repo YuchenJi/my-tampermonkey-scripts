@@ -186,6 +186,62 @@
 
             }
 
+            // 表单 D : 可靠性
+
+            // ==========================================
+
+            else if (currentUrl.includes("workflowid=625")) {
+                console.log("识别为: 可靠性 Test Request form，执行方案 D");
+                // 【第一批次】：填写主字段、文本和复选框
+                smartFill("ClientName", "1");
+                smartFill("ClientAdd", "0");
+                smartFill("Department", "8");
+                smartFill("Phone", "15901754757");
+                smartFill("ProductCustomer", "1");
+                smartFill("SampleReturn", "1");
+                smartFill("Email", "bob.ji@ween-semi.com");
+                smartFill("testway", "1");
+                smartFill("DataOnly", "1");
+                smartFill("Onlydata", "1");
+                // 【第二批次】：自动填写明细表 (根据你 HTML 里的结构预设数据)
+                // TestItem 对应下拉框的值(42=HTS, 43=HTGB正压, 44=HTGB负压, 110=HTRB)
+                // Testpoints 对应下拉框的值(11="168,500,1000hrs")
+                let detailData = [
+                    //HTSL
+                    { TestItem: "42", Qty: "80", Testpoints: "11", Remark: "Tj = 175°C" },
+                    //HTGBP
+                    { TestItem: "43", Qty: "80", Testpoints: "11", Remark: "Tj = 175°C, Vgs= 22V" },
+                    //HTGBN
+                    { TestItem: "44", Qty: "80", Testpoints: "11", Remark: "Tj = 175°C, Vgs= -12V" },
+                    //HTRB
+                    { TestItem: "110", Qty: "80", Testpoints: "11", Remark: "Tj = 175C, VDS=1200V" }
+                ];
+
+                const DETAIL_TABLE_ID = "detail_1"; // 泛微明细表1 (对应 groupid=0)
+
+                // 获取当前已有的明细表行数
+                let existingRowStr = window.WfForm.getDetailAllRowIndexStr(DETAIL_TABLE_ID);
+                let existingRowCount = existingRowStr === "" ? 0 : existingRowStr.split(",").length;
+
+                // 自动点击 "+" 号新增行，补齐到需要的行数
+
+                for (let i = existingRowCount; i < detailData.length; i++) {
+                    window.WfForm.addDetailRow(DETAIL_TABLE_ID);
+                }
+
+                // 延时 300ms 等待新增的 DOM 行渲染完毕，再向里面填字
+                setTimeout(() => {
+                    detailData.forEach((rowData, index) => {
+                        // 利用已有的 smartFillDetail 函数进行智能填表
+                        smartFillDetail("TestItem", rowData.TestItem, index);
+                        smartFillDetail("Qty", rowData.Qty, index);
+                        smartFillDetail("Testpoints", rowData.Testpoints, index);
+                        smartFillDetail("Remark", rowData.Remark, index);
+                    });
+                    console.log("====== 方案 D 明细表填充完毕 ======");
+                }, 300);
+            }
+            
             console.log("====== 自动填表指令派发完毕 ======");
             return true;
         } catch (error) {
